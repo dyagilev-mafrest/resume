@@ -1,0 +1,504 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Андрей Дягилев — вайбкодер и аналитик: ночные загрузчики, база, дашборд и отчёт для сети из семи пиццерий.">
+<meta property="og:title" content="Андрей Дягилев">
+<meta property="og:description" content="Вайбкожу внутри бизнеса: за три месяца в одиночку собрал ночные загрузчики, базу, дашборд и отчёт для сети из семи пиццерий.">
+<meta property="og:type" content="profile">
+<title>Андрей Дягилев</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;600&family=Onest:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+  :root {
+    --paper: #EEF0F5;
+    --surface: #FFFFFF;
+    --surface-2: #F6F7FB;
+    --ink: #10131B;
+    --ink-2: #414859;
+    --muted: #767E93;
+    --line: #DBDFEA;
+    --line-strong: #C3C9DA;
+    --accent: #2743DE;
+    --accent-soft: #C9D1F7;
+    --good: #0E7A58;
+
+    --display: "Unbounded", "Golos Text", system-ui, sans-serif;
+    --body: "Onest", "Golos Text", system-ui, -apple-system, sans-serif;
+    --mono: "JetBrains Mono", ui-monospace, "Cascadia Mono", monospace;
+
+    --wrap: 58rem;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper: #0B0D13;
+      --surface: #13161F;
+      --surface-2: #181C27;
+      --ink: #E8EAF3;
+      --ink-2: #B0B7C8;
+      --muted: #7C8497;
+      --line: #252B39;
+      --line-strong: #333B4D;
+      --accent: #8199FF;
+      --accent-soft: #2B3550;
+      --good: #4FCB9E;
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --paper: #0B0D13;
+    --surface: #13161F;
+    --surface-2: #181C27;
+    --ink: #E8EAF3;
+    --ink-2: #B0B7C8;
+    --muted: #7C8497;
+    --line: #252B39;
+    --line-strong: #333B4D;
+    --accent: #8199FF;
+    --accent-soft: #2B3550;
+    --good: #4FCB9E;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--body);
+    font-size: 1.0625rem;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap {
+    max-width: var(--wrap);
+    margin: 0 auto;
+    padding-inline: 20px;
+  }
+
+  a { color: var(--accent); text-decoration-thickness: 1px; text-underline-offset: 3px; }
+  a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 3px; }
+
+  .mono {
+    font-family: var(--mono);
+    font-size: 0.6875rem;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  /* hero */
+  .hero { padding-block: clamp(44px, 8vw, 84px) clamp(30px, 5vw, 46px); }
+  .hero-meta { display: flex; flex-wrap: wrap; gap: 8px 18px; margin-bottom: 24px; }
+  .hero h1 {
+    font-family: var(--display);
+    font-weight: 600;
+    font-size: clamp(2.2rem, 7.4vw, 4rem);
+    line-height: 1.02;
+    letter-spacing: -0.035em;
+    margin: 0 0 18px;
+    text-wrap: balance;
+  }
+  .thesis {
+    font-size: clamp(1.08rem, 2.3vw, 1.35rem);
+    line-height: 1.45;
+    color: var(--ink-2);
+    max-width: 38ch;
+    margin: 0 0 30px;
+    text-wrap: pretty;
+  }
+  .thesis b { color: var(--ink); font-weight: 600; }
+
+  .contacts { display: flex; flex-wrap: wrap; gap: 10px; }
+  .lnk {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 9px;
+    padding: 9px 15px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 2px;
+    color: var(--ink);
+    text-decoration: none;
+    font-size: 0.95rem;
+    transition: border-color .15s ease, transform .15s ease;
+  }
+  .lnk span { font-family: var(--mono); font-size: 0.625rem; letter-spacing: .13em; text-transform: uppercase; color: var(--muted); }
+  .lnk:hover { border-color: var(--accent); transform: translateY(-1px); }
+
+  /* project shot */
+  .shot { border-block: 1px solid var(--line); background: var(--surface); margin: 0; }
+  .shot .wrap { padding-block: 26px; display: grid; gap: 16px; }
+  .shot-frame {
+    border: 1px solid var(--line-strong);
+    border-radius: 3px;
+    overflow: hidden;
+    background: var(--surface-2);
+    line-height: 0;
+  }
+  .shot-frame img { display: block; width: 100%; height: auto; }
+  .shot-foot { display: flex; flex-wrap: wrap; gap: 12px 24px; align-items: baseline; justify-content: space-between; }
+  .shot-cap { margin: 0; font-size: 0.9rem; color: var(--ink-2); max-width: 54ch; }
+  .shot-cap b { color: var(--ink); font-weight: 600; }
+
+  /* sections */
+  section { padding-block: clamp(38px, 6vw, 64px); }
+  section + section { border-top: 1px solid var(--line); }
+
+  .sec-head { display: flex; align-items: baseline; gap: 16px; margin-bottom: 20px; flex-wrap: wrap; }
+  .sec-head h2 {
+    font-family: var(--display);
+    font-weight: 500;
+    font-size: clamp(1.25rem, 3vw, 1.7rem);
+    letter-spacing: -0.028em;
+    margin: 0;
+    text-wrap: balance;
+  }
+  .sec-head .rule { flex: 1; height: 1px; background: var(--line-strong); min-width: 24px; }
+
+  .lede { max-width: 62ch; color: var(--ink-2); margin: 0 0 26px; }
+  .lede b { color: var(--ink); font-weight: 600; }
+
+  /* projects */
+  .proj { display: grid; grid-template-columns: 10rem 1fr; gap: 24px; padding-block: 18px; border-top: 1px solid var(--line); }
+  .proj:first-of-type { border-top: 0; padding-top: 2px; }
+  .proj-meta { display: flex; flex-direction: column; gap: 9px; align-content: start; }
+  .proj-meta .role { font-family: var(--mono); font-size: 0.6875rem; letter-spacing: .12em; text-transform: uppercase; color: var(--accent); }
+  .stack { display: flex; flex-wrap: wrap; gap: 5px; }
+  .stack i {
+    font-style: normal;
+    font-family: var(--mono);
+    font-size: 0.6875rem;
+    color: var(--ink-2);
+    background: var(--surface-2);
+    border: 1px solid var(--line);
+    padding: 2px 6px;
+    border-radius: 2px;
+  }
+  .proj h3 { font-size: 1.12rem; font-weight: 600; margin: 0 0 6px; letter-spacing: -0.015em; text-wrap: balance; }
+  .proj-body > p { margin: 0; max-width: 58ch; color: var(--ink-2); }
+  .proj-body > p + p { margin-top: 9px; }
+  .proj-body > p b { color: var(--ink); font-weight: 600; }
+
+  .outcome {
+    display: flex;
+    gap: 9px;
+    align-items: baseline;
+    margin: 9px 0 0;
+    font-size: 0.93rem;
+    color: var(--good);
+    font-weight: 500;
+    max-width: 58ch;
+  }
+  .outcome::before { content: "\2192"; color: var(--muted); font-family: var(--mono); }
+
+  /* origin story */
+  .story { max-width: 62ch; margin: 0; color: var(--ink-2); }
+  .story p { margin: 0 0 12px; }
+  .story p:last-child { margin-bottom: 0; }
+  .story b { color: var(--ink); font-weight: 600; }
+
+  .handoff {
+    margin: 26px 0 18px;
+    padding-left: 14px;
+    border-left: 2px solid var(--accent);
+    max-width: 62ch;
+    color: var(--ink-2);
+  }
+  .handoff b { color: var(--ink); font-weight: 600; }
+
+  /* ai pipeline */
+  .pipe { border-top: 1px solid var(--line); }
+  .step { display: grid; grid-template-columns: 1.9rem 1fr; gap: 6px 14px; padding-block: 15px; border-bottom: 1px solid var(--line); }
+  @media (min-width: 720px) { .step { grid-template-columns: 1.9rem 13rem 1fr; gap: 6px 22px; align-items: baseline; } }
+  .step .n { font-family: var(--mono); font-size: 0.78rem; color: var(--muted); font-variant-numeric: tabular-nums; }
+  .step .who { display: flex; flex-direction: column; align-items: flex-start; gap: 7px; }
+  .step h4 { margin: 0; font-size: 1.02rem; font-weight: 600; letter-spacing: -0.012em; }
+  .step .cmd {
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    color: var(--accent);
+    background: var(--surface);
+    border: 1px solid var(--line);
+    padding: 2px 8px;
+    border-radius: 2px;
+  }
+  .step.manual .cmd { color: var(--ink-2); background: transparent; border-style: dashed; }
+  .step p { margin: 0; color: var(--ink-2); font-size: 0.95rem; max-width: 52ch; grid-column: 2 / -1; }
+  @media (min-width: 720px) { .step p { grid-column: auto; } }
+  .step.manual p b { color: var(--ink); font-weight: 600; }
+
+  /* hard things */
+  .hard { display: grid; gap: 26px; }
+  .hard-item { padding-left: 15px; border-left: 2px solid var(--accent); }
+  .hard-item h3 { margin: 0 0 7px; font-size: 1.08rem; font-weight: 600; letter-spacing: -0.015em; }
+  .hard-item p { margin: 0; color: var(--ink-2); max-width: 58ch; font-size: 0.97rem; }
+  .hard-item p + p { margin-top: 9px; }
+  .hard-item b { color: var(--ink); font-weight: 600; }
+
+  /* stack strip */
+  .strip { display: grid; gap: 12px; }
+  @media (min-width: 720px) { .strip { grid-template-columns: 7rem 1fr; gap: 10px 24px; align-items: baseline; } }
+  .strip h4 { font-family: var(--mono); font-size: 0.6875rem; letter-spacing: .13em; text-transform: uppercase; color: var(--muted); margin: 0; font-weight: 500; }
+  .strip ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 6px; }
+  .strip li { font-family: var(--mono); font-size: 0.75rem; color: var(--ink-2); background: var(--surface); border: 1px solid var(--line); padding: 4px 8px; border-radius: 2px; }
+
+  /* experience */
+  .job { display: grid; grid-template-columns: 10rem 1fr; gap: 24px; padding-block: 14px; border-top: 1px solid var(--line); }
+  .job:first-of-type { border-top: 0; padding-top: 0; }
+  .job .when { font-family: var(--mono); font-size: 0.6875rem; letter-spacing: .1em; color: var(--muted); }
+  .job h4 { margin: 0 0 3px; font-size: 1.02rem; font-weight: 600; }
+  .job .org { font-size: 0.89rem; color: var(--muted); margin: 0 0 6px; }
+  .job .what { margin: 0; color: var(--ink-2); font-size: 0.93rem; max-width: 56ch; }
+
+  .edu { display: grid; gap: 8px; margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--line); font-size: 0.88rem; color: var(--ink-2); }
+  .edu div { max-width: 62ch; }
+  .edu strong { font-family: var(--mono); font-size: 0.6875rem; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); font-weight: 500; margin-right: 10px; }
+
+  /* footer */
+  footer { border-top: 1px solid var(--line); background: var(--surface); padding-block: clamp(36px, 5vw, 56px); }
+  footer h2 { font-family: var(--display); font-weight: 500; font-size: clamp(1.3rem, 3.2vw, 1.9rem); letter-spacing: -0.03em; margin: 0 0 20px; }
+  .foot-note { margin: 24px 0 0; font-size: 0.82rem; color: var(--muted); max-width: 56ch; }
+
+  @media (max-width: 719px) {
+    .proj, .job { grid-template-columns: 1fr; gap: 12px; }
+    .proj-meta { flex-direction: row; flex-wrap: wrap; align-items: center; gap: 8px 14px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { transition: none !important; animation: none !important; }
+  }
+</style>
+</head>
+<body>
+<header class="hero">
+  <div class="wrap">
+    <div class="hero-meta">
+      <span class="mono">Якутск &middot; удалённо</span>
+      <span class="mono">Полная занятость</span>
+    </div>
+    <h1>Андрей Дягилев</h1>
+    <p class="thesis">Вайбкожу внутри бизнеса: <b>за три месяца в одиночку собрал</b> ночные загрузчики, базу, дашборд и отчёт для сети из семи пиццерий.</p>
+    <div class="contacts">
+      <a class="lnk" href="mailto:andie.dg@yandex.ru"><span>Почта</span>andie.dg@yandex.ru</a>
+      <a class="lnk" href="tel:+79992355039"><span>Телефон</span>+7 999 235-50-39</a>
+      <a class="lnk" href="https://t.me/andie_dg"><span>Telegram</span>@andie_dg</a>
+    </div>
+  </div>
+</header>
+
+<figure class="shot">
+  <div class="wrap">
+    <div class="shot-frame">
+      <img src="pulse.png" width="1920" height="911" alt="Раздел «Бизнес-пульс»: выручка, заказы, средний чек и LFL за неделю, с переключателями «Сеть / По каналам / По точкам».">
+    </div>
+    <figcaption class="shot-foot">
+      <p class="shot-cap"><b>«Бизнес-пульс» — главный экран дашборда.</b> Неделя сети: выручка, заказы, средний чек и LFL, каждый показатель раскрывается по каналам и по точкам. Слева — разделы, которые смотрят на встрече руководителей.</p>
+      <a class="lnk" href="https://github.com/dyagilev-mafrest/dodo-analytics-snapshot"><span>Код</span>dodo-analytics-snapshot</a>
+    </figcaption>
+  </div>
+</figure>
+
+<main class="wrap">
+
+  <section>
+    <div class="sec-head"><h2>Что уже работает</h2><span class="rule"></span></div>
+    <p class="lede">Ниже — то, чем пользуются каждую неделю. Всё это собрано одним человеком за три месяца; <b>как так вышло — в главе после проектов.</b></p>
+
+    <article class="proj">
+      <div class="proj-meta">
+        <span class="role">Интерфейс</span>
+        <div class="stack"><i>TypeScript</i><i>React</i><i>Vercel</i></div>
+      </div>
+      <div class="proj-body">
+        <h3>Дашборд «Бизнес-пульс»</h3>
+        <p>Восемь разделов, свободный период, раскрытие до пиццерии и сектора. Им пользуется руководство сети — это и есть настоящая приёмка.</p>
+      </div>
+    </article>
+
+    <article class="proj">
+      <div class="proj-meta">
+        <span class="role">ETL</span>
+        <div class="stack"><i>Python</i><i>GitHub Actions</i><i>Postgres</i></div>
+      </div>
+      <div class="proj-body">
+        <h3>Ночной сбор данных</h3>
+        <p>Тринадцать загрузчиков: продажи, доставка, производство, стопы, рейтинги, склад, найм. История с 2016 года, каждую ночь цепочкой.</p>
+        <p class="outcome">Пропуски закрываются сами, на сбой приходит алерт в Telegram.</p>
+      </div>
+    </article>
+
+    <article class="proj">
+      <div class="proj-meta">
+        <span class="role">Интеграции</span>
+        <div class="stack"><i>NAUMEN</i><i>Google Sheets</i><i>Bitrix</i></div>
+      </div>
+      <div class="proj-body">
+        <h3>Чужие системы в одном контуре</h3>
+        <p>Заявки техподдержки, управленческий отчёт финотдела, воронка найма — в той же базе, что и продажи, и за тот же период.</p>
+        <p class="outcome">Один вопрос — один запрос, независимо от того, чья это система.</p>
+      </div>
+    </article>
+
+    <article class="proj">
+      <div class="proj-meta">
+        <span class="role">Команда</span>
+        <div class="stack"><i>Python</i><i>Postgres</i></div>
+      </div>
+      <div class="proj-body">
+        <h3>Люди по данным</h3>
+        <p>Производительность смен, текучка, воронка найма от отклика до выхода — в тех же разрезах и за тот же период, что и продажи.</p>
+      </div>
+    </article>
+
+    <article class="proj">
+      <div class="proj-meta">
+        <span class="role">Продукт</span>
+        <div class="stack"><i>React</i><i>Postgres</i></div>
+      </div>
+      <div class="proj-body">
+        <h3>Отчёт, который порождает задачи</h3>
+        <p>У каждого отклонения обязательный исход: взято в работу с владельцем и сроком либо «принимаем как есть» с причиной.</p>
+        <p class="outcome">Дашборд стал повесткой встречи, а не экраном.</p>
+      </div>
+    </article>
+  </section>
+
+  <section>
+    <div class="sec-head"><h2>Как я к этому пришёл</h2><span class="rule"></span></div>
+    <div class="story">
+      <p>В Додо руководители департаментов собирались раз в неделю в Platrum, и каждый перед встречей заносил свои цифры руками. В Додо море данных, каждая пиццерия обвешана метриками до отдельной станции на кухне — но в инструмент попадала только верхушка, а копнуть вглубь было нечем.</p>
+      <p>Сначала я пошёл коротким путём: перенёс отчётность в Yandex DataLens, выгружал из Superset, подтягивал через Google-таблицы. Стало нагляднее — но выгрузка осталась ручной, то есть <b>проблема никуда не делась, просто похорошела.</b></p>
+      <p>Тогда сел на курс Алексея Куличевского «Осознанный вайбкодинг» и начал собирать сам. С 17 июня — <b>524 коммита в семи репозиториях</b>, всё через Claude Code. Сейчас у руководства дашборд, куда данные приходят из разных систем ночью и без меня.</p>
+    </div>
+
+    <p class="handoff">Главное, что я забрал с курса, — не приёмы общения с моделью, а <b>сам порядок работы</b>: идея проходит проверку раньше, чем в неё вложено время, а код — раньше, чем уедет в прод. Сам порядок собран из <b>скиллов Claude Code</b>.</p>
+
+    <div class="pipe">
+      <div class="step">
+        <span class="n">01</span>
+        <div class="who"><h4>Прожарка идеи</h4><span class="cmd">/grill-me</span></div>
+        <p>Неудобные вопросы, пока в замысле не останется дыр. Часть задач умирает здесь — и хорошо.</p>
+      </div>
+      <div class="step">
+        <span class="n">02</span>
+        <div class="who"><h4>Декомпозиция</h4><span class="cmd">/to-tickets</span></div>
+        <p>План разбирается на задачи в GitHub — со своим смыслом и проверяемым результатом у каждой.</p>
+      </div>
+      <div class="step">
+        <span class="n">03</span>
+        <div class="who"><h4>Имплементация</h4><span class="cmd">Выполни фичу #123</span></div>
+        <p>Код пишет Claude Code. Моя часть — держать рамку и не давать решать за меня там, где решение стоит денег.</p>
+      </div>
+      <div class="step">
+        <span class="n">04</span>
+        <div class="who"><h4>Проверка</h4><span class="cmd">/code-review</span></div>
+        <p>Разбор самого кода: что сломается на краевых случаях, что дублирует уже написанное, где реализация разъехалась с замыслом.</p>
+      </div>
+      <div class="step manual">
+        <span class="n">05</span>
+        <div class="who"><h4>Приёмка</h4><span class="cmd">руками</span></div>
+        <p><b>Сверка сумм живыми запросами к источнику.</b> Автотесты сюда напрашиваются, и Playwright я подключить могу — но пока проверяю руками: сошлась цифра или нет, знает только источник, не тесты и не ревью.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head"><h2>Что было сложным</h2><span class="rule"></span></div>
+    <div class="hard">
+
+      <article class="hard-item">
+        <h3>Ночью всё тихо ломается</h3>
+        <p>Тринадцать джобов делили один одноразовый токен, а очередь CI отменяла прогоны без ошибки — <b>74 срыва за два месяца</b>, данные просто переставали приходить. Свёл всё в одну управляемую цепочку, токен переехал в базу под блокировку, на каждый сбой — алерт в Telegram.</p>
+        <p class="outcome">Отмен ноль; день, который не загрузился, догоняется сам.</p>
+      </article>
+
+      <article class="hard-item">
+        <h3>Свести цифру с эталоном</h3>
+        <p><b>Это самая сложная часть всей работы</b> — не загрузчики и не графики. Пока моя цифра не сходится с корпоративной системой, встреча уходит в спор о данных, а не о проблеме. Поэтому считаю по официальной методике сети, а не по своей формуле, и каждое расхождение разбираю до причины, а не подгоняю коэффициентом. Времени на это уходит больше, чем на всё остальное вместе.</p>
+        <p><b>Методика есть, но взять её и просто сойтись не получается.</b> Она описывает принцип, а расхождение всегда сидит в деталях, которых в ней нет. Поэтому: <b>подключил MCP к корпоративной базе знаний</b>, чтобы читать методички прямо из редактора; <b>залез в репозиторий чужого проекта на той же платформе</b> за тем, чего нет в документации; а где молчали и документация, и код, — <b>написал в техподдержку платформы</b> и дождался ответа.</p>
+      </article>
+
+      <article class="hard-item">
+        <h3>Чужие системы отдают данные как им удобно</h3>
+        <p>API без фильтров по дате и компании, даты по Москве при сети в Якутске, таблица финотдела со статьями, у которых названия неуникальны. Каждый источник пришлось приводить к общему времени, общему ключу и общему периоду — иначе «почти сходится» превращается в тихую ошибку, которую никто не заметит.</p>
+      </article>
+
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head"><h2>Стек</h2><span class="rule"></span></div>
+    <div class="strip">
+      <h4>Данные</h4>
+      <ul><li>Python</li><li>PostgreSQL</li><li>Supabase</li><li>SQL</li><li>GitHub Actions</li><li>OAuth 2.0</li><li>REST API</li><li>Telegram Bot API</li></ul>
+      <h4>Интерфейсы</h4>
+      <ul><li>TypeScript</li><li>React</li><li>Vite</li><li>Tailwind</li><li>Recharts</li><li>Vercel</li><li>PWA</li></ul>
+      <h4>Инструменты</h4>
+      <ul><li>Claude Code</li><li>MCP</li><li>GitHub Issues</li></ul>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head"><h2>Опыт</h2><span class="rule"></span></div>
+
+    <div class="job">
+      <span class="when">сен 2025 &mdash; сейчас</span>
+      <div>
+        <h4>Маркетолог</h4>
+        <p class="org">Додо Пицца, МАФРЕСТ — Якутск</p>
+        <p class="what">Локальный и федеральный маркетинг, кампании, медиапланирование, анализ продаж. Параллельно — вся аналитическая инфраструктура сети.</p>
+      </div>
+    </div>
+
+    <div class="job">
+      <span class="when">мар 2024 &mdash; сейчас</span>
+      <div>
+        <h4>Product Manager</h4>
+        <p class="org">Издательство «Кэскил»</p>
+        <p class="what">Концепция продукта, дерево метрик, гипотезы, дорожная карта, работа команды разработки по скраму, продуктовая аналитика.</p>
+      </div>
+    </div>
+
+    <div class="job">
+      <span class="when">окт 2023 &mdash; мар 2024</span>
+      <div>
+        <h4>Аналитик</h4>
+        <p class="org">МОСТ БИЗНЕС</p>
+        <p class="what">Базы данных, Grafana, Appmetrica, Метрика, Firebase. Воронки, когорты, сегментация, поиск точек роста.</p>
+      </div>
+    </div>
+
+    <div class="job">
+      <span class="when">2019 &mdash; 2023</span>
+      <div>
+        <h4>Раньше</h4>
+        <p class="what">inDrive — верификация водителей и документов, борьба с мошенничеством. «Копирка», Санкт-Петербург — дизайн и вёрстка полиграфии.</p>
+      </div>
+    </div>
+
+    <div class="edu">
+      <div><strong>Курсы</strong>«Осознанный вайбкодинг» Алексея Куличевского, 2026 · Product Games — продуктовый маркетолог, 2025 · GoPractice — продуктовая аналитика, 2023 · Ingate — интернет-маркетолог, 2021</div>
+      <div><strong>Образование</strong>СПбГАСУ — магистр, теплоэнергетика, 2018 · СВФУ им. М. К. Аммосова — бакалавр, теплоэнергетика, 2015</div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <h2>Связаться</h2>
+    <div class="contacts">
+      <a class="lnk" href="mailto:andie.dg@yandex.ru"><span>Почта</span>andie.dg@yandex.ru</a>
+      <a class="lnk" href="tel:+79992355039"><span>Телефон</span>+7 999 235-50-39</a>
+      <a class="lnk" href="https://t.me/andie_dg"><span>Telegram</span>@andie_dg</a>
+    </div>
+    <p class="foot-note">Рабочие репозитории приватные — внутри данные сети. Код и дашборд покажу с экрана на созвоне.</p>
+  </div>
+</footer>
+</body>
+</html>
